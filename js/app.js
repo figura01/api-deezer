@@ -122,7 +122,7 @@ app.controller('artistController', function($scope,$http) {
 
     /* https://api.deezer.com/artist/27 */
 
-    artist.requestToApi
+    artist.requestToApi = '';
     var requestShowArtist = function(request){
         $http({
             method: 'GET',
@@ -138,7 +138,7 @@ app.controller('artistController', function($scope,$http) {
                 // or server returns response with an error status.
             });
         };
-    }
+    
 
 
 });
