@@ -71,11 +71,7 @@ app.controller('searchController', function($scope,$http) {
     $scope.filter = '';
     $scope.text= '';
     $scope.hideResult1 = true;
-    $scope.hideResultAlbum = true;
-    $scope.hideResultArtist = true;
-    $scope.hideResultTrack = true;
-    $scope.hideResultPopular = true;
-    $scope.hideResultRank = true;
+    $scope.hideResult2 = true;
 
     search.requestToApi = function(request){
 
@@ -121,11 +117,7 @@ app.controller('searchController', function($scope,$http) {
             console.log("resquest2: "+request2);
 
             var temp2 =  search.requestToApi(request2);
-
-            if($scope.filter == 'album'){
-                $scope.hideResultAlbum = false;
-            }
-            
+            $scope.hideResult2 = false;
             $scope.hideResult1 = true;
             console.log(temp2);
         }
@@ -174,55 +166,19 @@ app.controller('artistController', function($scope,$http) {
 
 });
 
-app.controller('albumController', function($scope,$http) {
-    console.log("album Controller");
+app.controller('trackController', function($scope,$http) {
+    console.log("track Controller");
     console.log($scope.id);
-    /* https://api.deezer.com/album/27 */
-    var album = this;
+
+    var track = this;
     var request = 
 
 
     track.requestToApi = function(request){
 
     };
-});
-
-
-app.controller('trackController', function($scope,$http) {
-    console.log("track Controller");
-    console.log($scope.id);
-
-    /* https://api.deezer.com/album/27 */
-
-    var track = this;
-    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/"+$scope.id;
 
 
 
-    track.requestToApi = function(request){
-        $http({
-            method: 'GET',
-            url: request
-        }).then(function successCallback(response) {
-                // this callback will be called asynchronously
-                // when the response is available
-                console.log(response.data);
-                $scope.datas = response.data;
-                $scope.preview = response.data.tracks.data[0].preview;
-
-
-                angular.element(document.querySelector('#id'))
-                var element = angular.element(document.querySelector('#track'));
-                element.append('<audio controls="controls"> <source src='+$scope.preview+' /></audio>');
-                console.log($scope.preview);
-        }, function errorCallback(response) {
-                console.log(response);
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-        });
-    };
-
-    var temp =  track.requestToApi(request);
-    console.log(temp);
 
 });

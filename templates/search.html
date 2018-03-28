@@ -35,7 +35,7 @@
 
                            
                                 <div class="input-field col s12 m4">
-                                    <button class="btn waves-effect waves-light" type="submit">Rechercher <i class="material-icons">search</i></button>
+                                    <button class="btn waves-effect waves-light" type="submit">Rechercher <i class="material-icons right">search</i></button>
                                 </div>
                             </div>
                         </form>
@@ -59,9 +59,25 @@
                     <div class="row">
                         <div class="col s12 m3" ng-repeat="data in datas.data">
                             <div class="card">
-                                <p>{{data.id}}</p>
-            
-                                <img ng-src="{{data.album.cover_medium}}">
+                                <div class="card-content">
+
+                                    <div class="card-header">
+                                        <img ng-src="{{data.album.cover_medium}}">
+                                    </div>
+                                    <div class="card-contender">
+                                            <p>Album: {{data.album.title}}</p>
+                                            <p>Artiste: {{data.artist.name}}</p>                    
+                                    </div>
+                                    
+                                    
+                                </div>
+
+                                <div class="card-action">
+                                    <a ui-sref="album({ albumID: data.album.id })" class="btn waves-effect waves-light">Voir L'album <i class="material-icons right">search</i></a>
+                                
+                                    <a ui-sref="artist({ artistID: data.artist.id })" class="btn waves-effect waves-light">Voir L'artiste <i class="material-icons right">search</i></a>
+                                    <a ui-sref="track({ albumID: data.album.id })" class="btn waves-effect waves-light">Ecouter un extrait <i class="material-icons right">search</i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -71,7 +87,7 @@
         </div>
     </section>
 
-    <section ng-hide="hideResult2">
+    <section ng-hide="hideResultAbum">
         <div class="row">
             <div class="container">
                 <div  class="result">
