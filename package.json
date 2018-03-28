@@ -1,22 +1,27 @@
 {
-  "name": "laurent-vuillaume-api",
+  "name": "api-deezer",
   "version": "1.0.0",
-  "description": "API Deezer",
+  "description": "Mon api deezer",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "http-server -a localhost -p 3000"
   },
-  "author": "laurent vuillaume",
-  "license": "ISC",
-  "dependencies": {
-    "angular": "^1.6.5",
-    "angular-cli": "^1.0.0-beta.28.3",
-    "angular-material": "^1.1.8",
-    "angular-route": "^1.6.5",
-    "angularjs-scroll-glue": "^2.1.0",
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.2.1",
-    "materialize-css": "^0.100.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/figura01/api-deezer.git"
   },
-  "devDependencies": {}
+  "keywords": [
+    "angular"
+  ],
+  "author": "Laurent Vuillaume",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/figura01/api-deezer/issues"
+  },
+  "homepage": "https://github.com/figura01/api-deezer#readme",
+  "dependencies": {
+    "angular-cli": "^1.0.0-beta.28.3",
+    "http-serve": "^1.0.1"
+  }
 }

@@ -1,0 +1,82 @@
+<div class="row">
+<div class="col s12 m8 offset-m2" ng-controller="searchController as search">
+    <div class="card white" >
+        <div class="card-content black-text">
+            <span class="card-title ">Recherche</span>
+            
+            <form  action="#" ng-submit="search.onSearch(search)">
+                
+                <div class="row">
+                    <div class="input-field col s12 m12">
+                        <input id="search" type="search" placeholder="Entrez le nom d'un artiste ou d'un album" ng-model="search.text"/>
+                        <label for="search"></label>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="input-field col s12 m12">
+                        <select class="browser-default" ng-change="search.change(search.filter)" ng-model="search.filter">
+                            <option value="0" disabled>Filtrer par</option>
+                            <option value="artist">Artiste</option>
+                            <option value="album">Album</option>
+                            <option value="track">Musique</option>
+                            <option value="1">Les plus populaire</option>
+                            <option value="2">Les mieux notés</option>
+                            <option value="3">Aucun</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m12">
+                        <button class="btn waves-effect waves-light" type="submit">Rechercher <i class="material-icons">search</i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card-action">
+            <a href="#">This is a link</a>
+            <a href="#">This is a link</a>
+        </div>
+    </div>
+
+    <div ng-hide="hideResult1" class="container">
+        <div class="row">
+            <div class="col s12 m12">
+                <h2>Resultats de recherche</h2>
+
+                <div class="row">
+                    <div class="card col s12 m4" ng-repeat="data in datas.data">
+                    
+                        <p>{{data.id}}</p>
+    
+                        <img ng-src="{{data.album.cover_medium}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-hide="hideResult2" class="result">
+            <h2>Resultats de recherche</h2>
+    
+            <div class="card col s12 m4" ng-repeat="data in datas.data">
+                <div class="card-content">
+                    <p>{{data.id}}</p>
+                    <p>{{data.cover_medium}}</p>
+                    <img ng-src="{{data.cover_medium}}">
+                </div>
+                <div class="card-action">
+                     <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
+                    <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
+                    <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
+                    
+                </div>
+            </div>
+    
+        </div>
+
+</div>
