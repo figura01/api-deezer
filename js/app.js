@@ -114,7 +114,11 @@ app.controller('searchController', function($scope,$http) {
 
             console.log(temp);
             $scope.hideResult1 = false;
-            $scope.hideResult2 = true;
+            $scope.hideResultAlbum = true;
+            $scope.hideResultArtist = true;
+            $scope.hideResultTrack = true;
+            $scope.hideResultRank = true;
+            $scope.hideResultPopular = true;
         }else{
             
             var request2 = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/'+$scope.filter+'?q='+$scope.text;
@@ -123,7 +127,52 @@ app.controller('searchController', function($scope,$http) {
             var temp2 =  search.requestToApi(request2);
 
             if($scope.filter == 'album'){
+                $scope.hideResult1 = true;
                 $scope.hideResultAlbum = false;
+               
+                $scope.hideResultArtist = true;
+                $scope.hideResultTrack = true;
+                $scope.hideResultRank = true;
+                $scope.hideResultPopular = true;
+            }else if($scope.filter == 'artist' ){
+                $scope.hideResult1 = true;
+                $scope.hideResultAlbum = true;
+               
+                $scope.hideResultArtist = false;
+                $scope.hideResultTrack = true;
+                $scope.hideResultRank = true;
+                $scope.hideResultPopular = true;
+            }else if($scope.filter == 'track' ){
+                $scope.hideResult1 = true;
+                $scope.hideResultAlbum = true;
+               
+                $scope.hideResultArtist = true;
+                $scope.hideResultTrack = false;
+                $scope.hideResultRank = true;
+                $scope.hideResultPopular = true;
+            }else if($scope.filter == 'popular'){
+                $scope.hideResult1 = true;
+                $scope.hideResultAlbum = true;
+               
+                $scope.hideResultArtist = true;
+                $scope.hideResultTrack = true;
+                $scope.hideResultRank = true;
+                $scope.hideResultPopular = false;
+            }else if($scope.filter == "rank") {
+                $scope.hideResult1 = true;
+                $scope.hideResultAlbum = true;
+               
+                $scope.hideResultArtist = true;
+                $scope.hideResultTrack = true;
+                $scope.hideResultRank = false;
+                $scope.hideResultPopular = true;
+            }else{
+                $scope.hideResult1 = false;
+                $scope.hideResultAlbum = true;
+                $scope.hideResultArtist = true;
+                $scope.hideResultTrack = true;
+                $scope.hideResultRank = true;
+                $scope.hideResultPopular = true;
             }
             
             $scope.hideResult1 = true;
@@ -179,12 +228,29 @@ app.controller('albumController', function($scope,$http) {
     console.log($scope.id);
     /* https://api.deezer.com/album/27 */
     var album = this;
-    var request = 
+    this.id = $scope.id;
 
+    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/"+this.id;
 
-    track.requestToApi = function(request){
-
+    this.requestToApi = function(request){
+        
+        $http({
+            method: 'GET',
+            url: request
+        }).then(function successCallback(response) {
+                // this callback will be called asynchronously
+                // when the response is available
+                console.log(response.data);
+                $scope.datas = response.data; 
+        }, function errorCallback(response) {
+                console.log(response);
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+        });
+        
     };
+
+    var temp = this.requestToApi(request);
 });
 
 
@@ -193,6 +259,20 @@ app.controller('trackController', function($scope,$http) {
     console.log($scope.id);
 
     /* https://api.deezer.com/album/27 */
+
+    var convertTime = function(duration){
+
+        var minutes = Math.trunc(duration/60);
+        var secondes = duration % 60;
+
+        if(secondes < 10){
+            secondes = '0'+secondes;
+        }
+
+        var result = minutes+'m '+secondes;
+        
+        return result;
+    }
 
     var track = this;
     var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/"+$scope.id;
@@ -209,6 +289,20 @@ app.controller('trackController', function($scope,$http) {
                 console.log(response.data);
                 $scope.datas = response.data;
                 $scope.preview = response.data.tracks.data[0].preview;
+                $scope.titleTrak = response.data.tracks.data[0].title;
+                $scope.titleAlbum = response.data.title;
+                $scope.albumId = response.data.id;
+
+                $scope.date = response.data.release_date
+
+                $scope.cover = response.data.cover_small;
+
+                $scope.duration = convertTime(response.data.tracks.data[0].duration);
+                $scope.date = response.data.release_date;
+
+                $scope.artiste_name = response.data.artist.name;
+                $scope.artistId = response.data.artist.id;
+                $scope.artistImg = response.data.artist.picture_small;
 
 
                 angular.element(document.querySelector('#id'))
@@ -221,6 +315,8 @@ app.controller('trackController', function($scope,$http) {
                 // or server returns response with an error status.
         });
     };
+
+
 
     var temp =  track.requestToApi(request);
     console.log(temp);

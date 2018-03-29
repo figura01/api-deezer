@@ -5,15 +5,31 @@
             <div class="card white" >
                 <div class="card-content black-text">
                     <span class="card-title ">Track</span>
-                    <p>{{preview}} </p>
-                    <audio controls="controls">
-                        <source ng-src="https://cdns-preview-c.dzcdn.net/stream/c-c08026a74b2dcff3256fc3153f8d7400-3.mp3" type="audio/mp3" />
-                    </audio>
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <h3>Titre: {{titleTrak}}</h2>
+
+                            <div id="album">
+                                <img id="visu_album" ng-src="{{cover}}">
+                                <p>Album: <a ui-sref="album({ albumID: albumId })">{{titleAlbum}}</a></p>
+                            </div>
+
+                            <div id="details">
+                                <h4>{{titleTrak}}</h3>
+                                <p>Durée: {{duration}} / Date de parution: {{date}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col s12 m6">
+                            <div id="artist">
+                                <img id="viu_artist" ng-src="{{artistImg}}"
+                                <span>Ariste: <a ui-sref="artist({ artistID: artistId })">{{artiste_name}}</a></span>
+                            </div>
+                        </div>
+                    </div>
                     
-                    
-  
                     <div id="track">
-                        
+                        <p>Ecouter un extrait</p>
                     </div>   
                 </div>
                 
