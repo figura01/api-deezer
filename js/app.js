@@ -36,11 +36,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
 
         .state('track', {
-            url: '/track/:albumID/',
+            url: '/track/:trackID/',
             templateUrl: '/templates/track.html',
             controller: function($scope, $stateParams) {
                 // get the id
-                $scope.id = $stateParams.albumID;
+                $scope.id = $stateParams.trackID;
 
             }
         })
@@ -52,7 +52,47 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 });
 
-app.controller('searchController', function($scope,$http) {
+app.run(function($rootScope){
+    $rootScope.favoriteList = [];
+}); 
+
+
+app.factory('favorisService', ['$rootScope', function ($rootScope) {
+    
+    var service = {
+
+        trak: {
+            id: '',
+            name: '',
+            src: ''
+        },
+
+        SaveState: function () {
+            sessionStorage.favorisrService = angular.toJson(service.trak);
+        },
+
+        RestoreState: function () {
+            service.model = angular.fromJson(sessionStorage.favorisrService);
+        }
+    }
+
+    $rootScope.$on("savestate", service.SaveState);
+    $rootScope.$on("restorestate", service.RestoreState);
+
+    return service;
+}]);
+
+
+app.controller('controllerPrincipal', ['$rootScope','$scope','$http', 'favorisService',  function($rootScope,$scope,$http, favorisService){
+
+    
+
+    console.log($rootScope.favoriteList);
+
+
+}]);
+
+app.controller('searchController', ['$rootScope','$scope','$http', 'favorisService', function($rootScope, $scope, $http, favorisService) {
     var search = this;
     //$('select').formSelect();
    
@@ -71,22 +111,48 @@ app.controller('searchController', function($scope,$http) {
     $scope.filter = '';
     $scope.text= '';
     $scope.hideResult1 = true;
-    $scope.hideResultAlbum = true;
-    $scope.hideResultArtist = true;
-    $scope.hideResultTrack = true;
-    $scope.hideResultPopular = true;
-    $scope.hideResultRank = true;
+    $scope.hideResult2 = true;
+
+    console.log($rootScope.favorite);
+
+    var convertTime = function(duration){
+        console.log("test type de duration "+typeof duration);
+        var minutes = Math.trunc(duration/60);
+        var secondes = duration % 60;
+
+        if(secondes < 10){
+            secondes = '0'+secondes;
+        }
+
+        var result = minutes+'m '+secondes;
+        
+        return result;
+    }
+
 
     search.requestToApi = function(request){
 
-    $http({
-        method: 'GET',
-        url: request
+        $http({
+            method: 'GET',
+            url: request
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
             // when the response is available
-            console.log(response.data);
-            $scope.datas = response.data; 
+         
+            $scope.data = response.data;
+            
+          
+
+
+            console.log("$scope.data :");
+            console.log($scope.data);
+
+            angular.forEach( $scope.data.data.data, function(value, key){
+                console.log(value.duration);
+                v
+                $scope.data.data.push(value.duration);
+            });
+            console.log($scope.data);
         }, function errorCallback(response) {
             console.log(response);
             // called asynchronously if an error occurs
@@ -106,6 +172,8 @@ app.controller('searchController', function($scope,$http) {
         console.log($scope.text);
         console.log($scope.filter);
 
+        
+
         if( angular.isUndefined($scope.filter) ){
             var request = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+$scope.text;
             console.log("request: "+request);
@@ -114,77 +182,23 @@ app.controller('searchController', function($scope,$http) {
 
             console.log(temp);
             $scope.hideResult1 = false;
-            $scope.hideResultAlbum = true;
-            $scope.hideResultArtist = true;
-            $scope.hideResultTrack = true;
-            $scope.hideResultRank = true;
-            $scope.hideResultPopular = true;
+           
+          
         }else{
             
-            var request2 = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/'+$scope.filter+'?q='+$scope.text;
+            var request2 = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+$scope.text+$scope.filter;
             console.log("resquest2: "+request2);
 
             var temp2 =  search.requestToApi(request2);
 
-            if($scope.filter == 'album'){
-                $scope.hideResult1 = true;
-                $scope.hideResultAlbum = false;
-               
-                $scope.hideResultArtist = true;
-                $scope.hideResultTrack = true;
-                $scope.hideResultRank = true;
-                $scope.hideResultPopular = true;
-            }else if($scope.filter == 'artist' ){
-                $scope.hideResult1 = true;
-                $scope.hideResultAlbum = true;
-               
-                $scope.hideResultArtist = false;
-                $scope.hideResultTrack = true;
-                $scope.hideResultRank = true;
-                $scope.hideResultPopular = true;
-            }else if($scope.filter == 'track' ){
-                $scope.hideResult1 = true;
-                $scope.hideResultAlbum = true;
-               
-                $scope.hideResultArtist = true;
-                $scope.hideResultTrack = false;
-                $scope.hideResultRank = true;
-                $scope.hideResultPopular = true;
-            }else if($scope.filter == 'popular'){
-                $scope.hideResult1 = true;
-                $scope.hideResultAlbum = true;
-               
-                $scope.hideResultArtist = true;
-                $scope.hideResultTrack = true;
-                $scope.hideResultRank = true;
-                $scope.hideResultPopular = false;
-            }else if($scope.filter == "rank") {
-                $scope.hideResult1 = true;
-                $scope.hideResultAlbum = true;
-               
-                $scope.hideResultArtist = true;
-                $scope.hideResultTrack = true;
-                $scope.hideResultRank = false;
-                $scope.hideResultPopular = true;
-            }else{
-                $scope.hideResult1 = false;
-                $scope.hideResultAlbum = true;
-                $scope.hideResultArtist = true;
-                $scope.hideResultTrack = true;
-                $scope.hideResultRank = true;
-                $scope.hideResultPopular = true;
-            }
+            $scope.hideResult1 = false;
             
-            $scope.hideResult1 = true;
             console.log(temp2);
         }
 
-
-
     };
-
     
-})
+}]);
 
 
 app.controller('artistController', function($scope,$http) {
@@ -241,7 +255,18 @@ app.controller('albumController', function($scope,$http) {
                 // this callback will be called asynchronously
                 // when the response is available
                 console.log(response.data);
-                $scope.datas = response.data; 
+                $scope.datas = response.data;
+                
+                $scope.tracks = response.data.tracks.data;
+                console.log(response.data.tracks.data);
+                $scope.dataTracks = [];
+
+                angular.forEach( response.data.tracks.data, function(value, key){
+                    console.log(value.title);
+                    $scope.dataTracks.push(value);
+                });
+                console.log($scope.dataTracks)
+
         }, function errorCallback(response) {
                 console.log(response);
                 // called asynchronously if an error occurs
@@ -275,7 +300,9 @@ app.controller('trackController', function($scope,$http) {
     }
 
     var track = this;
-    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/album/"+$scope.id;
+
+
+    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/"+$scope.id;
 
 
 

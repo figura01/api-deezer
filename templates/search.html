@@ -22,11 +22,11 @@
                                 <div class="input-field col s12 m4">
                                     <select class="browser-default" ng-change="search.change(search.filter)" ng-model="search.filter">
                                         <option value="" disabled>Filtrer par</option>
-                                        <option value="artist">Artiste</option>
-                                        <option value="album">Album</option>
-                                        <option value="track">Musique</option>
-                                        <option value="fans">Les plus populaire</option>
-                                        <option value="rank">Les mieux notés</option>
+                                        <option value="&order=ARTIST_ASC">Artiste</option>
+                                        <option value="&order=ALBUM_ASC">Album</option>
+                                        <option value="&order=TRACK_ASC">Musique</option>
+                                        <option value="&order=RATING_ASC">Les plus populaire</option>
+                                        <option value="&order=RANKING">Les mieux notés</option>
                                         <option value="0">Aucun</option>
                                     </select>
 
@@ -57,7 +57,7 @@
                     <h2>Resultats de recherche</h2>
 
                     <div class="row">
-                        <div class="col s12 m3" ng-repeat="data in datas.data">
+                        <div class="col s12 m4" ng-repeat="data in data.data">
                             <div class="card">
                                 <div class="card-content">
 
@@ -65,8 +65,13 @@
                                         <img ng-src="{{data.album.cover_medium}}">
                                     </div>
                                     <div class="card-contender">
-                                        <p>Album: {{data.album.title}}</p>
-                                        <p>Artiste: {{data.artist.name}}</p>                    
+                                        <div class="preview">
+                                            <p class="title-preview">{{data.title}}</p>
+                                        </div>
+                                        <div class="global_info">
+                                            <p>{{data.album.title}} / {{data.artist.name}}</p>
+                                            <p>{{data.duration}}</p>
+                                        </div>                   
                                     </div>
                                     
                                     
@@ -87,128 +92,48 @@
         </div>
     </section>
 
-    <section ng-hide="hideResultAlbum">
-        <div class="row">
-            <div class="container">
-                <div  class="result">
-                    <h2>Resultats de recherche</h2>
-
-                    <div class="card col s12 m3" ng-repeat="data in datas.data">
-                        <div class="card-content">
-                            <p>{{data.id}}</p>
-                            <p>{{data.cover_medium}}</p>
-                            <img ng-src="{{data.cover_medium}}">
+    <section ng-hide="hideResult2">
+            <div class="row">
+                    <div class="container">
+                        
+                        <div class="col s12 m12">
+                            <h2>Resultats de recherche</h2>
+        
+                            <div class="row">
+                                <div class="col s12 m4" ng-repeat="data in data.data">
+                                    <div class="card">
+                                        <div class="card-content">
+        
+                                            <div class="card-header">
+                                                <img ng-src="{{data.album.cover_medium}}">
+                                            </div>
+                                            <div class="card-contender">
+                                                <div class="preview">
+                                                    <p class="title-preview">{{data.title}}</p>
+                                                </div>
+                                                <div class="global_info">
+                                                    <p>{{data.album.title}} / {{data.artist.name}}</p>
+                                                    <p>{{duration}}</p>
+                                                </div>                   
+                                            </div>
+                                            
+                                            
+                                        </div>
+        
+                                        <div class="card-action">
+                                            <a ui-sref="album({ albumID: data.album.id })" class="btn waves-effect waves-light">Voir L'album <i class="material-icons right">search</i></a>
+                                        
+                                            <a ui-sref="artist({ artistID: data.artist.id })" class="btn waves-effect waves-light">Voir L'artiste <i class="material-icons right">search</i></a>
+                                            <a ui-sref="track({ trackID: data.id })" class="btn waves-effect waves-light">Ecouter un extrait <i class="material-icons right">search</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-action">
-                                <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
-                            <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
-                            <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
-                            
-                        </div>
+                    
                     </div>
-
                 </div>
-            </div> 
-        </div>
     </section>
 
-    <section ng-hide="hideResultArtist">
-        <div class="row">
-            <div class="container">
-                <div  class="result">
-                    <h2>Resultats de recherche</h2>
-
-                    <div class="card col s12 m3" ng-repeat="data in datas.data">
-                        <div class="card-content">
-                            <p>{{data.id}}</p>
-                            <p>{{data.cover_medium}}</p>
-                            <img ng-src="{{data.cover_medium}}">
-                        </div>
-                        <div class="card-action">
-                                <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
-                            <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
-                            <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
-                            
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-        </div>
-    </section>
-
-    <section ng-hide="hideResultTrack">
-        <div class="row">
-            <div class="container">
-                <div  class="result">
-                    <h2>Resultats de recherche</h2>
-
-                    <div class="card col s12 m3" ng-repeat="data in datas.data">
-                        <div class="card-content">
-                            <p>{{data.id}}</p>
-                            <p>{{data.cover_medium}}</p>
-                            <img ng-src="{{data.cover_medium}}">
-                        </div>
-                        <div class="card-action">
-                                <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
-                            <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
-                            <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
-                            
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-        </div>
-    </section>
-
-    <section ng-hide="hideResultPopular">
-        <div class="row">
-            <div class="container">
-                <div  class="result">
-                    <h2>Resultats de recherche</h2>
-
-                    <div class="card col s12 m3" ng-repeat="data in datas.data">
-                        <div class="card-content">
-                            <p>{{data.id}}</p>
-                            <p>{{data.cover_medium}}</p>
-                            <img ng-src="{{data.cover_medium}}">
-                        </div>
-                        <div class="card-action">
-                                <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
-                            <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
-                            <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
-                            
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-        </div>
-    </section>
-
-    <section ng-hide="hideResultRank">
-        <div class="row">
-            <div class="container">
-                <div  class="result">
-                    <h2>Resultats de recherche</h2>
-
-                    <div class="card col s12 m3" ng-repeat="data in datas.data">
-                        <div class="card-content">
-                            <p>{{data.id}}</p>
-                            <p>{{data.cover_medium}}</p>
-                            <img ng-src="{{data.cover_medium}}">
-                        </div>
-                        <div class="card-action">
-                                <a ui-sref="artist({ artistID: data.artist.id })">Test link artist</a>
-                            <a href="#!artist/{data.artist.id}" class="btn btn-small">Voir l'artiste</a>
-                            <a href="#!album/{data.id}" class="btn btn-small">Voir l'album</a>
-                            
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
-        </div>
-    </section>
+    
 </div>

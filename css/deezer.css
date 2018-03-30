@@ -1,3 +1,8 @@
 #search img {
     width:100%;
 }
+
+#search .title-preview{
+    font-size: 20px;
+    font-weight: 500;
+}
