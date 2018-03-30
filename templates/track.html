@@ -1,13 +1,17 @@
 <section ng-controller="trackController as search"> <div class="row">
     <div class="container">
   
-        <div class="col s12 m12" >
+        <div class="col s12 m12 album">
             <div class="card white" >
                 <div class="card-content black-text">
-                    <span class="card-title ">Track</span>
+                    <span class="card-title ">Fiche de la piste</span>
                     <div class="row">
+                        <div class="col s12 m12">
+                                <h3>Titre: {{titleTrack}}</h2>
+                        </div>
+                           
                         <div class="col s12 m6">
-                            <h3>Titre: {{titleTrak}}</h2>
+                            
 
                             <div id="album">
                                 <img id="visu_album" ng-src="{{cover}}">
@@ -15,15 +19,8 @@
                             </div>
 
                             <div id="details">
-                                <h4>{{titleTrak}}</h3>
+                                <h4>{{titleTrack}}</h3>
                                 <p>Durée: {{duration}} / Date de parution: {{date}}</p>
-                            </div>
-                        </div>
-
-                        <div class="col s12 m6">
-                            <div id="artist">
-                                <img id="viu_artist" ng-src="{{artistImg}}"
-                                <span>Ariste: <a ui-sref="artist({ artistID: artistId })">{{artiste_name}}</a></span>
                             </div>
                         </div>
                     </div>
@@ -34,11 +31,29 @@
                 </div>
                 
                 <div class="card-action">
-                    <a href="#">This is a link</a>
-                    <a href="#">This is a link</a>
+                    <a href="#">Voir le titre sur deezer</a>
+                    <span ng-hide="trackExist" >Ajouter a mes favoris <a id="addTrack" ng-model="trackExist" ng-click="addToPlaylist()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a></span>
+                    <span ng-show="trackExist">Retier de mes favoris <a id="removeTrack" ng-model="trackExist" ng-click="removeToPlaylist()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a></span>
                 </div>
             </div>
 
         </div>
+
+        <div class="col s12 m12 artiste">
+            <div class="card white">
+                <div class="card-content">
+                  
+                    <div id="artist">
+                        <img id="viu_artist" ng-src="{{artistImg}}"
+                        <span>Ariste: <a ui-sref="artist({ artistID: artistId })">{{artiste_name}}</a></span>
+                    </div>
+                            
+                </div>
+                <div class="card-action">
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
