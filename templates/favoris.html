@@ -7,7 +7,7 @@
                     <span class="card-title ">Favoris</span>
                         <div class="row">
                         <div class="col s12 m12">
-                        
+                                
                                 <table class="responsive-table">
                                     <thead>
                                         <tr>
@@ -21,13 +21,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="data in datas">
-                                            <td>{{data.preview}}</td>
-                                            <td>{{data.cover}}</td>
-                                            <td>{{data.titre}}</td>
+                                        
+                                        <tr ng-repeat="data in mesfavoris">
+                                            <td><audio contols="controls"><source ng-src="{{data.preview}}"></source></audio></td>
+                                            <td><img ng-src="{{data.cover}}"></td>
+                                            <td>{{data.title}}</td>
                                             <td>{{data.artist}}</td>
                                             <td>{{data.album}}</td>
-                                            <td>{{data.action}}</td>
+                                            <td><button class="btn element-to-find" id="remove-{{$index}}" ng-click="favoris.removeFavoris($event, data.id)" >remouve</button></td>
                                         </tr>
                     
                                     </tbody>

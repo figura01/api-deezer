@@ -62,15 +62,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
 app.service('playlistService', ['$rootScope', function($rootScope) {
     var self = this;
     self.playlist = [];
-    self.trackExist = false;
     
 
    
 
     self.addTrack = function (track) {
-        self.trackExist = true;
-        self.playlist.push(track);
-        self.SaveTrack(self.playlist);
+
+        console.log("service add Track");
+        console.log(track);
+        var playlist = self.getPlaylist();
+        playlist.push(track);
+        self.SaveTrack(playlist);
+          
     },
 
     self.SaveTrack = function(param) {
@@ -84,6 +87,8 @@ app.service('playlistService', ['$rootScope', function($rootScope) {
 
 
     self.removeTrack = function (trackId) {
+        console.log("fct remove service" );
+        console.log(trackId);
         self.trackExist = false;
         self.playlist = self.RestoreState();   
         var index = self.playList.indexOf(trackId);
@@ -96,7 +101,24 @@ app.service('playlistService', ['$rootScope', function($rootScope) {
        return self.playlist;
     },
 
-    
+    self.checkExistTrack = function(trackId){
+        console.log("check exist track");
+        console.log("trackId envoyé");
+        console.log(trackId.id);
+        //console.log(self.playlist);
+        var playlist = self.getPlaylist();
+        for( var j=0; j < playlist.length; j++){
+            console.log("rentre ds le for");
+            if(playlist[j].id == trackId){
+                console.log("la track existe");
+                return true;
+            }else{
+                console.log("la la track n'existe pas");
+                return false;
+            }
+        };
+        return false;
+    },
     self.playlist = self.RestoreState();
 
     
@@ -304,62 +326,7 @@ app.controller('albumController', function($scope,$http) {
 app.controller('trackController', ['$scope','$http','playlistService', function($scope,$http,playlistService) {
     console.log("track Controller");
     console.log($scope.id);
-   
     var track = this;
-
-    $scope.maTrack = {
-        id:'',
-        src:'',
-        cover:'',
-        title: '',
-        artist:'',
-        album:'',
-        link:''
-    };
-
-   
-
-    var localPlaylist = playlistService.getPlaylist();
-    console.log(localPlaylist);
-    console.log($scope.maTrack);
-    /* https://api.deezer.com/album/27 */
-
-    var convertTime = function(duration){
-
-        var minutes = Math.trunc(duration/60);
-        var secondes = duration % 60;
-
-        if(secondes < 10){
-            secondes = '0'+secondes;
-        }
-
-        var result = minutes+'m '+secondes;
-        
-        return result;
-    }
-
-    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/"+$scope.id;
-
-    $scope.addToPlaylist = function () {
-
-        console.log("fction add track");
-        console.log($scope.maTrack);
-        $scope.trackExist = true;
-       
-        playlistService.addTrack($scope.maTrack);
-        
-       
-    };
-
-    $scope.removeToPlaylist = function () {
-        
-        console.log("fction add track");
-        console.log($scope.maTrack);
-        $scope.trackExist = false;
-        playlistService.removeTrack($scope.maTrack.id);
-    };
-
-
 
     track.requestToApi = function(request){
         $http({
@@ -390,8 +357,7 @@ app.controller('trackController', ['$scope','$http','playlistService', function(
                 angular.element(document.querySelector('#id'))
                 var element = angular.element(document.querySelector('#track'));
                 element.append('<audio controls="controls"> <source src='+$scope.preview+' /></audio>');
-                console.log($scope.preview);
-                console.log(response.data.title_short);
+
 
                 $scope.maTrack.id = response.data.id;
                 $scope.maTrack.src = response.data.preview;   
@@ -404,15 +370,19 @@ app.controller('trackController', ['$scope','$http','playlistService', function(
 
                 console.log($scope.maTrack);
 
-                for ($scope.maTrack.id in localPlaylist){  
-                    if(localPlaylist[$scope.maTrack.id]){
+                for (var i = 0; i <= localPlaylist.length; i++){  
+                    console.log("local playlist après request");
+                 
+                    if( localPlaylist[0].id == $scope.maTrack.id ){
                         $scope.trackExist = true;
+                        console.log($scope.trackExist);
                     }else{
                         $scope.trackExist = false;
+                        console.log($scope.trackExist);
                     }  
                 }
                 console.log($scope.trackExist);
-
+               
                 
         }, function errorCallback(response) {
                 console.log(response);
@@ -421,15 +391,129 @@ app.controller('trackController', ['$scope','$http','playlistService', function(
         });
     };
 
-
+    var request = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/track/"+$scope.id;
 
     var temp =  track.requestToApi(request);
-    console.log(temp);
+
+
+
+    $scope.$watch('$viewContentLoaded','playlistService','track', function(){
+        
+        console.log("la page est chargé");
+
+
+        $scope.watchTrackExist ="test";
+        console.log("watch "+$scope.watchTrackExist);
+        console.log("au chargement track: "+$scope.maTrack);
+        console.log($scope.maTrack);
+        //$scope.trackExist = playlistService.checkExistTrack($scope.maTrack);
+
+       
+        $scope.istrackExist = playlistService.checkExistTrack($scope.maTrack);
+        $scope.trackExist = "oui";
+
+        console.log($scope.trackExist);
+
+       track.addToPlaylist = function () {
+            
+            console.log("fonction add toPlaylist");
+            console.log($scope.maTrack);
+            $scope.trackExist = true;
+            console.log($scope.trackExist);
+            playlistService.addTrack($scope.maTrack); 
+        };
+
+        var convertTime = function(duration){
+            
+                    var minutes = Math.trunc(duration/60);
+                    var secondes = duration % 60;
+            
+                    if(secondes < 10){
+                        secondes = '0'+secondes;
+                    }
+            
+                    var result = minutes+'m '+secondes;
+                    
+                    return result;
+                }
+            
+               
+            
+                
+            
+                $scope.removeToPlaylist = function () {
+                    
+                    console.log("fction removeToPlaylist");
+                    console.log($scope.maTrack);
+                    $scope.trackExist = false;
+                    playlistService.removeTrack($scope.maTrack.id);
+                };
+            
+            
+            
+               
+            
+                $scope.maTrack = {
+                    id:'',
+                    src:'',
+                    cover:'',
+                    title: '',
+                    artist:'',
+                    album:'',
+                    link:''
+                };
+            
+               
+            
+                var localPlaylist = playlistService.getPlaylist();
+            
+                
+                for (var i = 0; i < localPlaylist.length; i++){  
+                   console.log($scope.id);
+                    if(localPlaylist[i].id === $scope.id){
+                        console.log("oui");
+                        $scope.trackExist = true;
+                    }else{
+                        console.log("non");
+                        $scope.trackExist = false;
+                    }  
+                    
+                };
+            
+            
+                //console.log($scope.maTrack);
+                /* https://api.deezer.com/album/27 */
+            
+            
+            
+            
+                console.log(temp);
+
+
+    });
+    
+    
+    
+
+
 
 }]);
 
 
-app.controller('favorisController', ['$scope','$http','playlistService', function($scope,$http,playlistService) {
+app.controller('favorisController', ['$scope','$http','playlistService','$window','$document', function($scope,$http,playlistService,$window,$document) {
     console.log("ctrl favoris");
+    var favoris = this;
     
+    this.removeFavoris = function($events, favorisId){
+        console.log($events);
+       var el = $events.toElement.parentElement.parentElement;
+
+       console.log(el, favorisId);
+       playlistService.removeTrack(favorisId);
+       el.remove();
+    }
+    
+    $scope.mesfavoris = playlistService.getPlaylist();
+
+    //console.log($scope.favoris);
 }]);
