@@ -15,7 +15,7 @@
                                             <th></th>
                                             <th>Titre</th>
 
-                                            <th>Artist</th>
+                                            <th>Artist/Album</th>
                                             <th>Album</th>
                                             <th></th>
                                         </tr>
@@ -23,16 +23,22 @@
                                     <tbody>
                                         
                                         <tr ng-repeat="data in mesfavoris">
-                                            <td><audio contols="controls"><source ng-src="{{data.preview}}"></source></audio></td>
-                                            <td><img ng-src="{{data.cover}}"></td>
-                                            <td>{{data.title}}</td>
-                                            <td>{{data.artist}}</td>
-                                            <td>{{data.album}}</td>
-                                            <td><button class="btn element-to-find" id="remove-{{$index}}" ng-click="favoris.removeFavoris($event, data.id)" >remouve</button></td>
+                                            <td>
+                                                <i ng-click="favoris.playTrack($event, data.id, trackIsPlayed)" ng-model="trackIsPlayed" ng-init="trackIsPlayed = false" class="btn-floating material-icons">play_arrow</i>
+                                                <i ng-click="favoris.pauseTrack($event, data.id, trackIsPlayed)" ng-model="trackIsPlayed" ng-init="trackIsPlayed = false" class="btn-floating material-icons">pause</i>
+                                            </td>
+                                                
+                                                <td><img ng-src="{{data.cover}}"></td>
+                                            <td><a ui-sref="track({ trackID: data.id })">{{data.title}}</a></td>
+                                            <td>{{data.artist}}/({{data.album}})</td>
+                                            
+                                            <td><button class="btn-floating red" ng-click="favoris.removeFavoris($event, data.id)" ><i class="material-icons">remove</i></button></td>
                                         </tr>
                     
                                     </tbody>
                                 </table>
+
+                                <audio id="playerTrack" style="display:none"></audio>
                         
                         </div>    
                     </div>

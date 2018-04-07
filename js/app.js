@@ -353,8 +353,7 @@ app.controller('trackController', ['$scope','$http','playlistService', function(
                 $scope.artistId = response.data.artist.id;
                 $scope.artistImg = response.data.artist.picture_medium;
 
-                
-                angular.element(document.querySelector('#id'))
+        
                 var element = angular.element(document.querySelector('#track'));
                 element.append('<audio controls="controls"> <source src='+$scope.preview+' /></audio>');
 
@@ -503,7 +502,8 @@ app.controller('trackController', ['$scope','$http','playlistService', function(
 app.controller('favorisController', ['$scope','$http','playlistService','$window','$document', function($scope,$http,playlistService,$window,$document) {
     console.log("ctrl favoris");
     var favoris = this;
-    
+    $scope.audio = new Audio;
+    console.log($scope.audio);
     this.removeFavoris = function($events, favorisId){
         console.log($events);
        var el = $events.toElement.parentElement.parentElement;
@@ -511,6 +511,40 @@ app.controller('favorisController', ['$scope','$http','playlistService','$window
        console.log(el, favorisId);
        playlistService.removeTrack(favorisId);
        el.remove();
+    }
+
+    this.playTrack = function($events, trackId, trackIsPlayed){
+        console.log("Joue la fct playTrack", trackId);
+     
+        console.log(trackIsPlayed);
+        $scope.trackIsPlayed == true;
+        var localplaylist = playlistService.getPlaylist();
+        console.log(localplaylist);
+        for( var i = 0; i < localplaylist.length; i++){
+            if(localplaylist[i].id === trackId){
+                console.log("a trouvé la track");
+                console.log(localplaylist[i]);
+                $scope.audio.setAttribute("src",localplaylist[i].src);
+                $scope.audio.play();
+                /*
+                //var audio = new Audio(localplaylist[i].src);
+                if(trackIsPlayed == false){
+                    audio.play();
+                    //$scope.trackIsPlayed == true;
+                }else{
+                    audio.stop();
+                    //$scope.trackIsPlayed == false;
+                }
+                */
+            }else{
+                console.log("pas de track");
+            }
+        }
+        trackIsPlayed = true
+    };
+
+    this.pauseTrack = function() {
+        $scope.audio.pause();
     }
     
     $scope.mesfavoris = playlistService.getPlaylist();
