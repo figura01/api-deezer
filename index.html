@@ -17,27 +17,35 @@
 <!-- apply our angular app to our site -->
 <body ng-app="routerApp">
 
-<!-- NAVIGATION -->
-<header>
-    <nav class="navbar-fixed">
-        <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Logo</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a ui-sref="recherche" class="active">Recherche</a></li>
-                <li><a ui-sref="favoris">Favoris</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <ul class="sidenav" id="mobile-demo">
-    <li><a href="#!recherche" class="active">Recherche</a></li>
-    <li><a href="favoris">Favoris</a></li>
-    </ul>
-</header>
 
 <!-- MAIN CONTENT -->
 <main ng-controller="controllerPrincipal">
+
+    <!-- NAVIGATION -->
+<header>
+        <div class="navbar-fixed">
+            <nav>
+                <div class="container">
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">MY DEEZ'S</a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li class="active"><a ui-sref="recherche">Recherche</a></li>
+                            <li><a ui-sref="favoris">Favoris</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    
+        <ul class="sidenav" id="mobile-demo">
+        <li class="active"><a href="#!recherche">Recherche</a></li>
+        <li><a href="favoris">Favoris</a></li>
+        </ul>
+    
+        <div id="bg"></div>
+    </header>
     <div class="row">
         
         <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->

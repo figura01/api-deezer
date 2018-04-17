@@ -1,4 +1,4 @@
-<section ng-controller="trackController as search"> <div class="row">
+<section ng-controller="trackController as track"> <div class="row">
     <div class="container">
   
         <div class="col s12 m12 album">
@@ -32,9 +32,10 @@
                 
                 <div class="card-action">
                     <p>{{trackExist}}</p>
+                    {{track.maTrack}}
                     <a href="{{data.link}}" target="_blank"> Voir le titre sur deezer</a>
-                    <span ng-hide="isTrackExist" >Ajouter a mes favoris <a id="addTrack" ng-click="addToPlaylist(maTrack)" ng-model="maTrack" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a></span>
-                    <span ng-show="isTrackExist">Retier de mes favoris <a id="removeTrack" ng-click="removeToPlaylist()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a></span>
+                    <span ng-hide="isTrackExist" >Ajouter a mes favoris <a id="addTrack" ng-click="track.addToPlaylist(maTrack)" ng-model="maTrack" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a></span>
+                    <span ng-show="isTrackExist">Retier de mes favoris <a id="removeTrack" ng-click="track.removeToPlaylist(maTrack)" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">remove</i></a></span>
                 </div>
             </div>
 

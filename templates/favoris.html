@@ -21,11 +21,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <tr ng-show="mesfavoris.lenght == 1">
+                                            <p>Vous n'avez pas de liste de favoris {{mesfavoris.lenght}}</p>
+                                        </tr>
                                         <tr ng-repeat="data in mesfavoris">
                                             <td>
-                                                <i ng-click="favoris.playTrack($event, data.id, trackIsPlayed)" ng-model="trackIsPlayed" ng-init="trackIsPlayed = false" class="btn-floating material-icons">play_arrow</i>
-                                                <i ng-click="favoris.pauseTrack($event, data.id, trackIsPlayed)" ng-model="trackIsPlayed" ng-init="trackIsPlayed = false" class="btn-floating material-icons">pause</i>
+                                                <button id="btn-play{{$index}}"  ng-click="favoris.playTrack($event, data.id, trackIsPlayed, $index)" class="btn btn-floating btn-play blue"><i class="material-icons">play_arrow</i></button>
+                                                <button id="btn-pause{{$index}}" ng-click="favoris.pauseTrack($event, data.id, trackIsPlayed, $index)" class="btn-pause btn-floating blue"><i class="material-icons">pause</i></button>
+                                                
                                             </td>
                                                 
                                                 <td><img ng-src="{{data.cover}}"></td>
