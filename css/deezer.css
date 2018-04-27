@@ -13,15 +13,13 @@
     height:40px;
 }
 
+/***********************************/
 /*PAGE SEARCH*/
 #bg-search {
-   
     background-image: url('../img/bg-search2.jpg');
     background-size: cover;
     background-attachment: fixed;
     height: 500px;
-
-    
 }
 
 #bg-search .gradiant{
@@ -50,10 +48,134 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+#loader {
+    margin:0 auto;
+    display:block;
+}
+
+
+#search .page_title {
+    width: 100%;
+    padding: 6% 34%;
+}
+
+#search .card-action .btn {
+    display:block;
+    margin-bottom:0.5rem;
+}
+
+#search .card-action .btn:last-child {
+    margin-bottom:0;
+} 
+
 /*FIN PAGE SEARCH*/
+/***********************************/
+
+/***********************************/
+/* PAGE ARTISTE */
+#bg-artiste {
+    background-image: url('../img/bg-artiste.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top;
+    object-fit: cover;
+    height: 500px;
+}
+
+#bg-artiste .gradiant{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0,0,0,0.4), transparent, rgba(0,0,0,0.4));
+}
+
+#content_artiste{
+    position: relative;
+    top:-16rem;
+}
+
+#artiste .page_title:before{
+    bottom: -6rem;
+}
 
 
+#artiste img {
+    border-radius:50%;
+    border:0.4rem solid rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    width:20rem;
+    height: 20rem;
+}
+/* FIN PAGE ARTISTE*/
+/***********************************/
 
+/***********************************/
+/* PAGE ALBUM */
+
+#album {
+
+}
+
+#bg-album {
+    background-image: url("../img/bg-album.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top;
+    object-fit: cover;
+    height: 500px;
+}
+/* FIN PAGE ALBUM */
+/***********************************/
+
+/***********************************/
+/* PAGE TRACK */
+
+#bg-track {
+    background-image: url("../img/bg-track.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top;
+    object-fit: cover;
+    height: 500px;
+}
+
+#track .page_title:before {
+    bottom: -6rem;
+}
+#track #details img {
+    float: left;
+    margin-right: 1rem;
+}
+
+#track #artist {
+    text-align: center;
+}
+
+#track #artist img {
+    border-radius: 50%;
+}
+/* FIN PAGE TRACK */
+/***********************************/
+
+
+/* PAGE FAVORIS */
+#favoris .page_title:before {
+    bottom: -6rem;
+}
+
+#bg-favoris{
+    background-image: url('../img/bg-favoris.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top;
+    object-fit: cover;
+    height: 500px;
+}
+/* FIN PAGE FAVORIS */
 
 .page_title {
     color:white;
@@ -71,7 +193,7 @@ nav {
 .page_title {
     color: white;
     text-align: center;
-    width: 50rem;
+    width: 100%;
     margin: 0 auto;
     padding-top: 9rem;
     position:relative;
@@ -79,8 +201,11 @@ nav {
 }
 .title-result {
     color:white;
-    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
     position:relative;
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 2.5rem;
 }
 
 .title-result:before {
@@ -89,8 +214,9 @@ nav {
     width: 15rem;
     height: 4px;
     position:relative;
-    bottom: -2rem;
+    bottom: -4rem;
     background-color: orange;
+    margin:0 auto;
 }
 .page_title:before {
     content: "";
@@ -106,4 +232,154 @@ nav {
 .content {
     position: relative;
     top:-7rem;
+}
+
+/****************************/
+/* RESPONSIVE */
+
+
+
+@media only screen and (min-width:320px){
+    #search .page_title{
+        width: 100%;
+        padding: 6% 4%;
+    }
+
+    #search .page_title:before{
+        bottom:-18rem;
+    }
+
+    #bg-search{
+        height:410px;
+    }
+
+    /* PAGE TRACK */
+    #track #details img {
+        float: none;
+        width:100%;
+    }
+}
+
+@media only screen and (min-width:564px) and (max-width:599px) {
+    #search .page_title{
+        width: 100%;
+        padding: 6% 7%;
+    }
+
+    #search .page_title:before{
+        bottom:-18rem;
+    }
+
+    #bg-search{
+        height:400px;
+    }
+}
+
+@media only screen and (min-width:600px) and (max-width:714px) {
+    #search .page_title{
+        width: 100%;
+        padding: 12% 4%;
+    }
+
+    #search .page_title:before{
+        bottom:-14rem;
+    }
+
+    #bg-search{
+        height:400px;
+    }
+
+    #track #details img {
+        float: left;
+        width:auto;
+    }
+}
+
+@media only screen and (min-width:715px) and (max-width:786px) {
+
+    #search .page_title{
+        width: 100%;
+        padding: 17% 4%;
+    }
+
+    #search .page_title:before{
+        bottom:-11rem;
+    }
+
+
+    #track #details img {
+        float: left;
+        width:auto;
+    }
+}
+
+@media only screen and (min-width:787px) and (max-width:992px){
+    #search .page_title{
+        width: 100%;
+        padding: 12% 4%;
+    }
+
+    #search .page_title:before{
+        bottom:-11rem;
+    }
+
+
+    #track #details img {
+        float: left;
+        width:auto;
+    }
+    #track #artist {
+        margin-top: 2rem;
+    }
+    
+}
+
+@media only screen and (min-width:993px) and (max-width:1200px){
+    #search .page_title{
+        width: 100%;
+        padding: 12% 6%;
+    }
+
+    #search .page_title:before{
+        bottom:-11rem;
+    }
+
+    #track #details img {
+        float:none;
+        width:auto;
+    }
+}
+
+
+@media only screen and (min-width:1201px) and (max-width:1600px){
+    #search .page_title{
+        width: 100%;
+        padding: 10% 14%;
+    }
+
+    #search .page_title:before{
+        bottom:-11rem;
+    }
+
+    #track #details img {
+        float:left;
+        width:auto;
+    }
+}
+
+@media only screen and (min-width:1601px){
+    #search .page_title{
+        width: 100%;
+        padding: 6% 21%;
+    
+    }
+
+    #search .page_title:before{
+        bottom:-11rem;
+    }
+
+    #track #details img {
+        float:left;
+        width:auto;
+    }
 }

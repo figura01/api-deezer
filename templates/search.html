@@ -1,7 +1,11 @@
 <div id="search" ng-controller="searchController as search">
     <div id="bg-search">
         <div class="gradiant">
-            <h2 class="page_title">{{page_title}}</h2>
+            <div class="container">
+                <div class="valign-wrapper">
+                    <h2 class="page_title">{{page_title}}</h2>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -13,6 +17,7 @@
                     <div class="card white" >
                         <div class="card-content black-text">
                             <span class="card-title ">Recherche</span>
+                                
                             
                             <form  action="#" ng-submit="search.onSearch(search)">
                                 
@@ -36,7 +41,7 @@
                                     </div>
                             
                                     <div class="input-field col s12 m4">
-                                        <button class="btn waves-effect waves-light" type="submit">Rechercher <i class="material-icons right">search</i></button>
+                                        <button class="btn waves-effect waves-light orange" type="submit">Rechercher <i class="material-icons right">search</i></button>
                                     </div>
                                 </div>
                             </form>
@@ -49,8 +54,20 @@
         <section ng-hide="hideResult">
             <div class="row">
                 <div class="container">
+                        
                     
                     <div class="col s12 m12">
+                            <div id="loader" class="preloader-wrapper big active center">
+                                    <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                        <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
                         <h2 class="title-result">Resultats de recherche</h2>
 
                         <div class="row">
@@ -78,10 +95,10 @@
                                     </div>
 
                                     <div class="card-action">
-                                        <a ui-sref="album({ albumID: data.album.id })" class="btn waves-effect waves-light">Voir L'album <i class="material-icons right">search</i></a>
+                                        <a ui-sref="album({ albumID: data.album.id })" class="btn waves-effect waves-light orange">Voir L'album <i class="material-icons right">search</i></a>
                                     
-                                        <a ui-sref="artist({ artistID: data.artist.id })" class="btn waves-effect waves-light">Voir L'artiste <i class="material-icons right">search</i></a>
-                                        <a ui-sref="track({ trackID: data.id })" class="btn waves-effect waves-light">Ecouter un extrait <i class="material-icons right">search</i></a>
+                                        <a ui-sref="artist({ artistID: data.artist.id })" class="btn waves-effect waves-light orange">Voir L'artiste <i class="material-icons right">search</i></a>
+                                        <a ui-sref="track({ trackID: data.id })" class="btn waves-effect waves-light orange">Ecouter un extrait <i class="material-icons right">audiotrack</i></a>
                                     </div>
                                 </div>
                             </div>
